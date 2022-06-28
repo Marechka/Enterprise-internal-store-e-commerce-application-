@@ -31,19 +31,20 @@ public class Order {
     @NonNull
     Date orderDate;
 
-   @NonNull
+
     double orderSubtotal;
-
-    @NonNull
     double tax;
-
-    @NonNull
     double total;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     @JoinColumn(name = "employee_employee_id")
     private Employee employee;
 
+    public Order( @NonNull Date orderDate, Employee employee) {
+        //this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.employee = employee;
+    }
 
     @Override
     public boolean equals(Object o) {

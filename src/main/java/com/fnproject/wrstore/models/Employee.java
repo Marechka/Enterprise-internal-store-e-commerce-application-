@@ -3,6 +3,7 @@ package com.fnproject.wrstore.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.persistence.Id;
@@ -34,6 +35,7 @@ public class Employee {
     String lastName;
 
     @NonNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date startDate;
 
     Date termDate;
@@ -52,12 +54,12 @@ public class Employee {
     }
 
 
-    //    public Employee(int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
-//        this.id = id;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.startDate = startDate;
-//    }
+        public Employee(int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
+        this.employeeId = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+    }
 
 
 

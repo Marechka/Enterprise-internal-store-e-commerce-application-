@@ -5,9 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -25,12 +23,22 @@ import java.util.Objects;
 public class OrderDetailsID implements Serializable {
 
     @NonNull
-    @Column(name = "order_number")
-    int orderNumber;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+    @JoinColumn(name = "order_orderId")
+    private Order order;
+
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "order_number")
+//    int orderNumber;
 
     @NonNull
-    @Column(name = "product_id")
-    int productId;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    //    @Column(name = "product_id")
+    //    int productId;
 
 
     @Override
@@ -38,11 +46,11 @@ public class OrderDetailsID implements Serializable {
         if (this == o) return true;
         if (!(o instanceof OrderDetailsID)) return false;
         OrderDetailsID that = (OrderDetailsID) o;
-        return orderNumber == that.orderNumber && productId == that.productId;
+        return order.equals(that.order) && product.equals(that.product);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderNumber, productId);
+        return Objects.hash(order, product);
     }
 }
