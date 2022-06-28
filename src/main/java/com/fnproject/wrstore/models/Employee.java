@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -25,7 +26,7 @@ import java.util.Objects;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     int employeeId;
 
     @NonNull
@@ -39,6 +40,10 @@ public class Employee {
     Date startDate;
 
     Date termDate;
+
+//    @OneToMany(mappedBy = "employee",
+//            fetch = FetchType.LAZY)
+//    private List<Order> orders;
 
     @Override
     public boolean equals(Object o) {
@@ -54,7 +59,7 @@ public class Employee {
     }
 
 
-        public Employee(int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
+        public Employee(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
         this.employeeId = id;
         this.firstName = firstName;
         this.lastName = lastName;

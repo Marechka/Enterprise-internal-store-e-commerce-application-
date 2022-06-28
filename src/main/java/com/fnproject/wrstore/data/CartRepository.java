@@ -1,5 +1,6 @@
 package com.fnproject.wrstore.data;
 
+import com.fnproject.wrstore.models.Cart;
 import com.fnproject.wrstore.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -7,11 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
-    List<Employee> findAll();
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+    List<Cart> findAllByEmployeeOrderByDateDesc(Employee employee);
 
-    Employee findByEmployeeId(String email);
-
-   // Employee findUserByEmail(String email);
-
+    List<Cart> deleteByEmployee(Employee employee);
 }

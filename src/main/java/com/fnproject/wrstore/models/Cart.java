@@ -1,14 +1,11 @@
 package com.fnproject.wrstore.models;
 
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Objects;
 
 @NoArgsConstructor
 //@AllArgsConstructor
@@ -18,40 +15,34 @@ import java.util.Objects;
 @Slf4j
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "order_details")
-
-
+@Table(name="carts")
 @Entity
-public class OrderDetails {
+
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    int cartId;
 
-    @NotNull
-    @Column(name = "quantity")
-    int quantity;
-
-    @NotNull
-    @Column(name = "price")
-    double price;
 
     @Column(name = "date")
     Date date;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    Order order;
-
-    @OneToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    Product product;
+    private Product product;
 
-    public OrderDetails(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price) {
+    @OneToOne(targetEntity = Employee.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "employee_id")
+    private Employee employee;
+
+
+    private int quantity;
+
+    public Cart(Product product, int quantity, Employee employee) {
+        this.employee = employee;
         this.product = product;
         this.quantity = quantity;
-        this.price = price;
-        this.order = order;
         this.date = new Date();
     }
 }

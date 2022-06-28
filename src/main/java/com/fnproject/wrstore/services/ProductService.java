@@ -35,7 +35,7 @@ public class ProductService {
 
     public void saveOrUpdate(Product product){
         productRepository.save(product);
-        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getId(),product.getProdName()));
+        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getId(),product.getName()));
     }
 
     public void delete(Product product){

@@ -3,59 +3,43 @@ package com.fnproject.wrstore.models;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
 
-import java.util.Objects;
-
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @Slf4j
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "orderw")
+@Table(name="orders")
 
 @Entity
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int orderId;
+    int id;
 
-    @NonNull
-    Date orderDate;
+    @Column(name = "date")
+    Date date;
 
+    @Column(name = "total_price")
+    double totalPrice;
 
-    double orderSubtotal;
-    double tax;
-    double total;
+//    @Column(name = "session_id")
+//    private String sessionId;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
-    @JoinColumn(name = "employee_employee_id")
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    private List<OrderDetails> orderItems;
+
+    @ManyToOne()
+    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
 
-    public Order( @NonNull Date orderDate, Employee employee) {
-        //this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.employee = employee;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Order)) return false;
-        Order order = (Order) o;
-        return orderId == order.orderId && Double.compare(order.orderSubtotal, orderSubtotal) == 0 && Double.compare(order.tax, tax) == 0 && Double.compare(order.total, total) == 0 && orderDate.equals(order.orderDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(orderId, orderDate, orderSubtotal, tax, total);
-    }
 }
