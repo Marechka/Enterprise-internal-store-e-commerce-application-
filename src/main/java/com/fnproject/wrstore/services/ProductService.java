@@ -1,5 +1,6 @@
 package com.fnproject.wrstore.services;
 
+import com.fnproject.wrstore.DTO.ProductDto;
 import com.fnproject.wrstore.data.ProductRepository;
 import com.fnproject.wrstore.models.Product;
 import lombok.AccessLevel;
@@ -10,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,5 +49,48 @@ public class ProductService {
     public void delete(Product product){
         productRepository.delete(product);
     }
+
+    public List<ProductDto> listProducts() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for(Product product : products) {
+            ProductDto productDto = getDtoFromProduct(product);
+            productDtos.add(productDto);
+        }
+        return productDtos;
+    }
+
+    public static ProductDto getDtoFromProduct(Product product) {
+        ProductDto productDto = new ProductDto(product);
+        return productDto;
+    }
+
+    public static Product getProductFromDto(ProductDto productDto) {
+        Product product = new Product(productDto);
+        return product;
+    }
+
+    public void addProduct(ProductDto productDto) {
+        Product product = getProductFromDto(productDto);
+        productRepository.save(product);
+    }
+
+    public void updateProduct(int productID, ProductDto productDto) {
+        Product product = getProductFromDto(productDto);
+        product.setId(productID);
+        productRepository.save(product);
+    }
+
+
+    public Product getProductById(Integer productId) throws NoSuchElementException{
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent())
+            throw new NoSuchElementException("Product id is invalid " + productId);
+        return optionalProduct.get();
+    }
+
+
+
+
 
 }

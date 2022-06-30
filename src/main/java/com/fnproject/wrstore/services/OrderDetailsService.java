@@ -26,13 +26,9 @@ public class OrderDetailsService {
     public OrderDetailsService(OrderDetailsRepository orderDetailsRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
     }
-//    public void addOrderedProducts(OrderDetails orderDetails) {
-//        orderDetailsRepository.save(orderDetails);
+//    public List<OrderDetails> findAll() {
+//        return orderDetailsRepository.findAll();
 //    }
-
-    public List<OrderDetails> findAll() {
-        return orderDetailsRepository.findAll();
-    }
 
     // Make it search by Order number
 

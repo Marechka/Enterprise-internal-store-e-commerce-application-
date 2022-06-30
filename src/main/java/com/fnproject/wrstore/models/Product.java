@@ -1,5 +1,6 @@
 package com.fnproject.wrstore.models;
 
+import com.fnproject.wrstore.DTO.ProductDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -51,13 +52,13 @@ public class Product {
     private List<Cart> carts;
 
 
-//    public Product(ProductDto productDto, Category category) {
-//        this.name = productDto.getName();
+    public Product(ProductDto productDto) {
+        this.name = productDto.getName();
 //        this.imageURL = productDto.getImageURL();
-//        this.description = productDto.getDescription();
-//        this.price = productDto.getPrice();
+        this.description = productDto.getDescription();
+        this.price = productDto.getPrice();
 //        this.category = category;
-//    }
+    }
 
     public Product(String name /*String imageURL*/, double price, String description /*Category category*/) {
         super();
