@@ -44,6 +44,6 @@ public class Cart {
         this.employee = employee;
         this.product = product;
         this.quantity = quantity;
-        this.date = new Date(String.valueOf(java.time.LocalDate.now()));
+        this.date = new Date();
     }
 }

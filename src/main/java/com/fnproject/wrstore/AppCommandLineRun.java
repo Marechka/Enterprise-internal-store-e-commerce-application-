@@ -55,8 +55,8 @@ public class AppCommandLineRun implements CommandLineRunner {
         productService.saveOrUpdate(pr2);
 
        // Cart cart1 = new Cart(pr1, 2, emp1);
-      //  cartService.addToCart1(pr1, 2, emp1);
-
+      cartService.addToCart1(pr1, 2, emp1);
+      orderService.placeOrder(emp1);
 
 
 
