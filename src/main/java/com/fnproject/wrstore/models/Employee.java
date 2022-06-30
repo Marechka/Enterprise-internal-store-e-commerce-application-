@@ -41,9 +41,9 @@ public class Employee {
 
     Date termDate;
 
-//    @OneToMany(mappedBy = "employee",
-//            fetch = FetchType.LAZY)
-//    private List<Order> orders;
+    @OneToMany(mappedBy = "employee",
+            fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     @Override
     public boolean equals(Object o) {

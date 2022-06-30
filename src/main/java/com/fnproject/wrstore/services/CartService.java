@@ -38,6 +38,11 @@ public class CartService {
         cartRepository.save(cart);
     }
 
+    // for commandline runner
+    public void addToCart1( Product product, int qty, Employee employee){
+        Cart cart = new Cart(product, qty, employee);
+        cartRepository.save(cart);
+    }
 
     public CartDto listCartItems(Employee employee) {
         List<Cart> cartList = cartRepository.findAllByEmployeeOrderByDateDesc(employee);
@@ -59,6 +64,7 @@ public class CartService {
     }
 
 
+   // public void createCartItem();
     public void updateCartItem(AddToCartDto cartDto, Employee employee,Product product){
         Cart cart = cartRepository.getOne(cartDto.getId());
         cart.setQuantity(cartDto.getQuantity());

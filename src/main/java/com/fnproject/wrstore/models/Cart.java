@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import java.text.DateFormat;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -43,6 +44,6 @@ public class Cart {
         this.employee = employee;
         this.product = product;
         this.quantity = quantity;
-        this.date = new Date();
+        this.date = new Date(String.valueOf(java.time.LocalDate.now()));
     }
 }

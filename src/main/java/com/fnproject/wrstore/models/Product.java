@@ -59,13 +59,13 @@ public class Product {
 //        this.category = category;
 //    }
 
-//    public Product(String name, String imageURL, double price, String description /*Category category*/) {
-//        super();
-//        this.name = name;
-//        this.imageURL = imageURL;
-//        this.price = price;
-//        this.description = description;
-//        // this.category = category;
-//    }
+    public Product(String name /*String imageURL*/, double price, String description /*Category category*/) {
+        super();
+        this.name = name;
+        //this.imageURL = imageURL;
+        this.price = price;
+        this.description = description;
+        // this.category = category;
+    }
 
 }
