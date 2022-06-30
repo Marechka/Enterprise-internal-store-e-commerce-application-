@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,12 +26,17 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+
     public List<Product> findAll(){
         return productRepository.findAll();
     }
+
     @Transactional(rollbackOn = {NoSuchElementException.class})
     public Product findById(int id) throws NoSuchElementException{
-        return productRepository.findById(id).orElseThrow();
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (!optionalProduct.isPresent())
+            throw new NoSuchElementException("Product id is invalid or there is no record" + id);
+        return optionalProduct.get();
     }
 
     public void saveOrUpdate(Product product){

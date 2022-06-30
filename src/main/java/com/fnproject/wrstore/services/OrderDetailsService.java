@@ -26,6 +26,9 @@ public class OrderDetailsService {
     public OrderDetailsService(OrderDetailsRepository orderDetailsRepository) {
         this.orderDetailsRepository = orderDetailsRepository;
     }
+//    public void addOrderedProducts(OrderDetails orderDetails) {
+//        orderDetailsRepository.save(orderDetails);
+//    }
 
     public List<OrderDetails> findAll() {
         return orderDetailsRepository.findAll();
@@ -33,12 +36,13 @@ public class OrderDetailsService {
 
     // Make it search by Order number
 
-//    @Transactional(rollbackOn = {NoSuchElementException.class})
-//    public OrderDetails findByEmployeeId(Integer id) throws NoSuchElementException{
-//        return orderDetailsRepository.findById(id).orElseThrow();
-//    }
+    @Transactional(rollbackOn = {NoSuchElementException.class})
+    public OrderDetails findByEmployeeId(int id) throws NoSuchElementException{
+        return orderDetailsRepository.findById(id).orElseThrow();
+    }
 
-    public void saveOrUpdate(OrderDetails orderDetails){
+    // saveOrUpdate()
+    public void addOrderedProducts(OrderDetails orderDetails){
         log.info(orderDetails.toString());
         orderDetailsRepository.save(orderDetails);
 

@@ -7,7 +7,11 @@ import com.fnproject.wrstore.data.CartRepository;
 import com.fnproject.wrstore.models.Cart;
 import com.fnproject.wrstore.models.Employee;
 import com.fnproject.wrstore.models.Product;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,10 +21,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
-@Transactional
+@Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Transactional(rollbackOn = {DataAccessException.class})
 public class CartService {
 
-    private  CartRepository cartRepository;
+    CartRepository cartRepository;
 
     @Autowired
     public CartService(CartRepository cartRepository) {

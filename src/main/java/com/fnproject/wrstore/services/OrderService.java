@@ -32,10 +32,8 @@ public class OrderService {
     //OrderRepository orderRepository;
     //EmployeeRepository employeeRepository;
 
-    private CartService cartService;
-
+    CartService cartService;
     OrderRepository orderRepository;
-
     OrderDetailsRepository orderItemsRepository;
 
     @Autowired
