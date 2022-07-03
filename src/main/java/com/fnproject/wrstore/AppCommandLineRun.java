@@ -23,15 +23,12 @@ public class AppCommandLineRun implements CommandLineRunner {
     ProductService productService;
     OrderDetailsService orderDetailsService;
 
-    CartService cartService;
-
     @Autowired
-    public AppCommandLineRun(EmployeeService employeeService, OrderService orderService, ProductService  productService, OrderDetailsService orderDetailsService, CartService cartService) {
+    public AppCommandLineRun(EmployeeService employeeService, OrderService orderService, ProductService  productService, OrderDetailsService orderDetailsService) {
         this.employeeService = employeeService;
         this.orderService = orderService;
         this.productService = productService;
         this.orderDetailsService = orderDetailsService;
-        this.cartService = cartService;
     }
 
     @PostConstruct
@@ -43,25 +40,37 @@ public class AppCommandLineRun implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        Employee emp1 = new Employee(0112, "Masha", "Volska", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") );
+        Employee emp1 = new Employee(1, "Masha", "Volska", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") );
         log.info("Before save" + emp1);
         employeeService.saveOrUpdate(emp1);
         log.info("After save" + emp1);
-        employeeService.saveOrUpdate(new Employee( 0113, "Tania", "Yanushkevych", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") ));
+        employeeService.saveOrUpdate(new Employee( 2, "Tania", "Yanushkevych", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") ));
 
-        Product pr1 = new Product("Juice 5 oz", 2.50, "Ocean Spray");
+
+
+        Product pr1 = new Product("Juice 5 oz", "Ocean Spray", 2.50);
         productService.saveOrUpdate(pr1 );
-        Product pr2 =  new Product("Coke", 3.00, "Coca-Cola");
+        Product pr2 =  new Product("Coke", "Coca-Cola",3.00);
         productService.saveOrUpdate(pr2);
 
-       // Cart cart1 = new Cart(pr1, 2, emp1);
-      cartService.addToCart1(pr1, 2, emp1);
-      orderService.placeOrder(emp1);
+
+        Order or1 = new Order(emp1);
+       orderService.save(or1);
+       //orderService.save(new Order(employeeService.findByEmployeeId(1)));
+
+        //OrderDetails ord1 = new OrderDetails(5, or1,pr1 );
+        //orderDetailsService.saveOrUpdate(ord1);
+
+       orderDetailsService.saveOrUpdate(new OrderDetails(5,orderService.findById(1), pr1));
+        Order or2 = new Order(emp1);
+        log.warn("Or2: " + or2);
+         orderService.save(or2);
+
+        orderService.placeOrder(or1);
+        orderService.placeOrder(orderService.findById(1));
 
 
 
-
-        //Order or1 = new Order(new SimpleDateFormat("MM/dd/yyyy").parse("06/25/2022"));
         // Order or1 = new Order(java.time.LocalDate.now()));
         //orderService.saveOrUpdate(or1, emp1.getEmployeeId());
 //

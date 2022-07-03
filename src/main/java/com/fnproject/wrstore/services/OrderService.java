@@ -1,13 +1,13 @@
 package com.fnproject.wrstore.services;
 
-import com.fnproject.wrstore.DTO.CartDto;
-import com.fnproject.wrstore.DTO.CartItemDto;
 import com.fnproject.wrstore.data.EmployeeRepository;
 import com.fnproject.wrstore.data.OrderDetailsRepository;
 import com.fnproject.wrstore.data.OrderRepository;
+import com.fnproject.wrstore.data.ProductRepository;
 import com.fnproject.wrstore.models.Employee;
 import com.fnproject.wrstore.models.Order;
 import com.fnproject.wrstore.models.OrderDetails;
+import com.fnproject.wrstore.models.Product;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -30,19 +30,25 @@ import java.util.Optional;
 public class OrderService {
 
     //OrderRepository orderRepository;
-    //EmployeeRepository employeeRepository;
+    EmployeeRepository employeeRepository;
 
-    CartService cartService;
+    //CartService cartService;
     OrderRepository orderRepository;
-    OrderDetailsRepository orderItemsRepository;
-
+    OrderDetailsRepository orderDetailsRepository;
+    ProductRepository productRepository;
     @Autowired
-    public OrderService(CartService cartService, OrderRepository orderRepository, OrderDetailsRepository orderItemsRepository) {
-        this.cartService = cartService;
+    public OrderService(EmployeeRepository employeeRepository, OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository, ProductRepository productRepository) {
+        this.employeeRepository = employeeRepository;
         this.orderRepository = orderRepository;
-        this.orderItemsRepository = orderItemsRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+        this.productRepository = productRepository;
     }
 
+    public void newOrder(int employeeId) {
+        Order newOrder = new Order();
+        Employee employee = employeeRepository.findById(employeeId);
+        newOrder.setEmployee(employee);
+    }
 //    @Value("${BASE_URL}")
 //    private String baseURL;
 //
@@ -99,70 +105,74 @@ public class OrderService {
 //        return Session.create(params);
 //    }
 
-    public void placeOrder (Employee employee /*String sessionId*/) {
+
+    public void placeOrder (Order order) {
+
         // first let get cart items for the user
-        CartDto cartDto = cartService.listCartItems(employee);
-
-        List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
-
-        // create the order and save it
-        Order newOrder = new Order();
-        newOrder.setDate(new Date());
-        //newOrder.setSessionId(sessionId);
-        newOrder.setEmployee(employee);
-        newOrder.setTotalPrice(cartDto.getTotalCost());
-        orderRepository.save(newOrder);
-
-        for (CartItemDto cartItemDto : cartItemDtoList) {
-            // create orderItem and save each one
-            OrderDetails orderItem = new OrderDetails();
-            orderItem.setDate(new Date());
-            orderItem.setPrice(cartItemDto.getProduct().getPrice());
-            orderItem.setProduct(cartItemDto.getProduct());
-            orderItem.setQuantity(cartItemDto.getQuantity());
-            orderItem.setOrder(newOrder);
-            // add to order item list
-            orderItemsRepository.save(orderItem);
+        // pull List <OrderDetails> , count total, place in total field
+        int orderId = order.getId();
+        List<OrderDetails> orderDetails = orderDetailsRepository.findOrderDetailsByOrderId(orderId);
+        double total = 0;
+        for (OrderDetails  details: orderDetails) {
+            Product product = productRepository.findById(details.getProduct().getId()).orElseThrow();
+            total+= details.getQty() * product.getPrice();
         }
-        //
-        cartService.deleteEmployeeCartItems(employee);
+        order.setTotalPrice(total);
+        orderRepository.save(order);
     }
+//        CartDto cartDto = cartService.listCartItems(employee);
+//
+//        List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
+//
+//        // create the order and save it
+//        Order newOrder = new Order(employee);
+//        //newOrder.setDate(new Date());
+//        //newOrder.setSessionId(sessionId);
+//        newOrder.setEmployee(employee);
+//        newOrder.setTotalPrice(cartDto.getTotalCost());
+//        orderRepository.save(newOrder);
+//
+//        for (CartItemDto cartItemDto : cartItemDtoList) {
+//            // create orderItem and save each one
+//            OrderDetails orderItem = new OrderDetails();
+//            orderItem.setDate(new Date());
+//            orderItem.setPrice(cartItemDto.getProduct().getPrice());
+//            orderItem.setProduct(cartItemDto.getProduct());
+//            orderItem.setQuantity(cartItemDto.getQuantity());
+//            orderItem.setOrder(newOrder);
+//            // add to order item list
+//            orderItemsRepository.save(orderItem);
+//        }
+//        //
+//        cartService.deleteEmployeeCartItems(employee);
+//    }
 
     public List<Order> listOrders(Employee employee) {
         return orderRepository.findAllByEmployeeOrderByDateDesc(employee);
     }
 
-
-    public Order getOrder(Integer orderId) throws NoSuchElementException {
-        Optional<Order> order = orderRepository.findById(orderId);
-        if (order.isPresent()) {
-            return order.get();
-        }
-       throw new NoSuchElementException("Order not found");
+    public List<Order> findAll(){
+        return orderRepository.findAll();
     }
 
+    @Transactional(rollbackOn = {NoSuchElementException.class})
+    public Order findById(int id) throws NoSuchElementException{
+        return orderRepository.findById(id).orElseThrow();
+    }
 
+    public void save(Order order){
+       // order.setEmployee(employeeRepository.findById(id).get());
+        orderRepository.save(order);
+        log.info(String.format("Order ID created: %d Order Employee Name: %s",order.getId(),order.getEmployee()));
+    }
 
-    // My old stuff
-
-
-//
-//    public List<Order> findAll(){
-//        return orderRepository.findAll();
-//    }
-//    @Transactional(rollbackOn = {NoSuchElementException.class})
-//    public Order findById(int id) throws NoSuchElementException{
-//        return orderRepository.findById(id).orElseThrow();
-//    }
-//
-//    public void saveOrUpdate(Order order, int id){
-//        order.setEmployee(employeeRepository.findById(id).get());
+//    public void Update(Order order){
+//       // order.setEmployee(employeeRepository.findById(id).get());
 //        orderRepository.save(order);
-//        log.info(String.format("Order ID created: %d Order Employee Name: %s",order.getOrderId(),order.getEmployee()));
+//        log.info(String.format("Order ID created: %d Order Employee Name: %s",order.getId(),order.getEmployee()));
 //    }
-//
-//    public void delete(Order order){
-//        orderRepository.delete(order);
-//    }
+    public void delete(Order order){
+        orderRepository.delete(order);
+    }
 
 }

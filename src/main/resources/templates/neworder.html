@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--Theme Business Frontpage    -->
+<!--https://startbootstrap.com/template/business-frontpage-->
+<!-- Head-->
+<div th:replace="fragrams/header :: header" />
+<body>
+<!-- Responsive navbar-->
+<div th:replace="fragrams/nav :: nav" />
+
+<!-- Header-->
+<header class="bg-dark py-5">
+    <h1 class="text-white">Enter ID of Products available</h1>
+
+    <form th:action="@{'/Orders/saveordertouser'}" autocomplete="off" method="post">
+        <div class="input-group mb-3">
+            <input list="employees" id="employeeId" name="employeeId" placeholder="Type Employee ID"
+                   aria-label="Type Course Name" aria-describedby="button-addon1"/>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Submit</button>
+            <datalist id="employees">
+                            <span th:each="employee: ${employees}">
+                            <option th:value="${employee.employeeId}" th:text="${employee.firstName}" th:id="${employee.LastName}">
+                            </span>
+            </datalist>
+
+        </div>
+    </form>
+
+    <form th:action="@{'/courses/'+${student.email}+'/savecoursestouser'}" autocomplete="off" method="post">
+
+        <div class="input-group mb-3">
+            <input list="courses" id="courses-choice" name="courses-choice" placeholder="Type Course Name"
+                   aria-label="Type Course Name" aria-describedby="button-addon2"/>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+            <datalist id="courses">
+                            <span th:each="course: ${studentNotRegisteredToThisCourses}">
+                            <option th:value="${course.name}" th:text="${course.name}" th:id="${course.id}">
+                            </span>
+            </datalist>
+
+
+        </div>
+    </form>
+
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">price</th>
+        </tr>
+        </thead>
+        <form th:action="@{'/cart/add'}" autocomplete="off" method="post">
+        <tbody>
+        <tr th:each="productDto: ${neworderproducts}">
+            <th scope="row" th:text="${productDto.id}" ></th>
+            <th scope="row" th:text="${productDto.name}" ></th>
+<!--            <td> <input aria-describedby="button-addon2" type="number" name = "AddToCartDto" th:field="*{AddToCartDto.id}" ></td>-->
+            <td th:text="${productDto.description}" ></td>
+            <td th:text="${productDto.price}" ></td>
+<!--            <td><input type="number" name="Qty" class="form-control" placeholder="Qty" aria-describedby="button-addon2" ></td>-->
+<!--            <td><button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button></td>-->
+        </tr>
+        </tbody>
+<!--            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>-->
+        </form>
+    </table>
+    </div>
+</header>
+
+
+
+<!-- Footer-->
+<div th:replace="fragrams/footer :: footer"/>
+
+</body>
+</html>

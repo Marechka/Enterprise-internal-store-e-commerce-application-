@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-@ToString
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name="orders")
 
@@ -26,8 +27,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(name = "date")
-    Date date;
+    @Column(name = "date") Date date;
 
     @Column(name = "total_price")
     double totalPrice;
@@ -35,11 +35,35 @@ public class Order {
 //    @Column(name = "session_id")
 //    private String sessionId;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    private List<OrderDetails> orderItems;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", orphanRemoval = true)
+    private List<OrderDetails> orderItems = new java.util.ArrayList<>();
 
-    @ManyToOne()
-    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
+    @NonNull
+    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
+
+    public Order( Employee employee) {
+        this.date = new Date();
+        this.employee = employee;
+    }
+//    public Order(int id, Employee employee) {
+//        this.id = id;
+//        this.date = new Date();
+//        this.employee = employee;
+//    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return id == order.id && Double.compare(order.totalPrice, totalPrice) == 0 && Objects.equals(date, order.date) && employee.equals(order.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, totalPrice, employee);
+    }
 }
