@@ -16,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-@ToString
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "order_details")
 
@@ -26,32 +26,31 @@ public class OrderDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    int id;
 
     @NotNull
-    @Column(name = "quantity")
-    int quantity;
+    int qty;
 
-    @NotNull
-    @Column(name = "price")
-    double price;
+//    @NotNull
+//    @Column(name = "price")
+//    double price;
 
-    @Column(name = "date")
-    Date date;
+//    @Column(name = "date")
+//    Date date;
 
-    @ManyToOne
+    @ToString.Exclude
+    @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     Order order;
 
-    @OneToOne
+    @OneToOne( orphanRemoval = true)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     Product product;
 
-    public OrderDetails(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price) {
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
+    public OrderDetails(int quantity, Order order, Product product) {
+        this.qty = quantity;
         this.order = order;
-        this.date = new Date();
+        this.product = product;
     }
+
 }

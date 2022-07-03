@@ -14,58 +14,54 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @Slf4j
-@ToString
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "employee")
+@Table(name = "employees")
 
 @Entity
 public class Employee {
 
     @Id
+    @NonNull
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    int employeeId;
+    int id;
 
-    @NonNull
-    String firstName;
+    @NonNull String firstName;
 
-    @NonNull
-    String lastName;
+    @NonNull String lastName;
 
     @NonNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date termDate;
 
-    @OneToMany(mappedBy = "employee",
-            fetch = FetchType.LAZY)
-    private List<Order> orders;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Order> orders = new java.util.ArrayList<>();
+
+    public Employee(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Employee)) return false;
         Employee employee = (Employee) o;
-        return employeeId == employee.employeeId && firstName.equals(employee.firstName) && lastName.equals(employee.lastName) && startDate.equals(employee.startDate) && Objects.equals(termDate, employee.termDate);
+        return id == employee.id && firstName.equals(employee.firstName) && lastName.equals(employee.lastName) && startDate.equals(employee.startDate) && Objects.equals(termDate, employee.termDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeId, firstName, lastName, startDate, termDate);
+        return Objects.hash(id, firstName, lastName, startDate, termDate);
     }
-
-
-        public Employee(@NonNull int id, @NonNull String firstName, @NonNull String lastName, @NonNull Date startDate) {
-        this.employeeId = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.startDate = startDate;
-    }
-
-
-
 }
+
