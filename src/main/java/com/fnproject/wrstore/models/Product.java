@@ -16,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-@ToString
+//@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "product")
 
@@ -29,44 +29,21 @@ public class Product {
 
     @NotNull
     String name;
-
-//    @NotNull
-//    String imageURL;
+    @NotNull
+    String description;
 
     @NotNull
     double price;
 
-    @NotNull
-    String description;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+    private List<OrderDetails> orderDetails = new java.util.ArrayList<>();
 
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "category_id", nullable = false)
-//    Category category;
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-//    private List<WishList> wishListList;
-
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Cart> carts;
-
-
-    public Product(ProductDto productDto) {
-        this.name = productDto.getName();
-//        this.imageURL = productDto.getImageURL();
-        this.description = productDto.getDescription();
-        this.price = productDto.getPrice();
-//        this.category = category;
-    }
-
-    public Product(String name /*String imageURL*/, double price, String description /*Category category*/) {
-        super();
+    public Product(String name, String description, double price ) {
         this.name = name;
-        //this.imageURL = imageURL;
         this.price = price;
         this.description = description;
-        // this.category = category;
     }
 
 }
