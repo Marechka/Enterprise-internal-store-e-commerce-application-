@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @Slf4j
@@ -33,15 +35,46 @@ public class OrderController {
     @GetMapping
     public String getAllOrders(Model model){
         model.addAttribute("orders",orderService.findAll());
+
+       // model.addAttribute("employee", new Employee())
         return "orders";
     }
 
-    @GetMapping (value = "/neworder")
-    public String newOrder(Model model) {
-        model.addAttribute("neworderproducts", productService.findAll());
-        model.addAttribute("employees", employeeService.findAll());
-        return "neworder";
+    @PostMapping("/generateneworder")
+    public String generateNewOrder(@RequestParam(required = false) String id, RedirectAttributes redirectAttributes) {
+        log.warn("employee id: " + id);
+        try {
+             redirectAttributes.addFlashAttribute("employee", employeeService.findByEmployeeId(Integer.parseInt(id)));
+             redirectAttributes.addFlashAttribute("products", productService.findAll());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            redirectAttributes.addFlashAttribute("employee_not_found", String.format("Employee: %s not found!", id));
+            return "redirect:/orders";
+        }
+            return "/neworder";
+
     }
+
+    @PostMapping ("/neworder")
+    public String newOrder(RedirectAttributes redirectAttribute, @ModelAttribute("employee") Employee employee){
+        log.warn("employee : " + employee);
+        try {
+                Order order = new Order(employee);
+                orderService.save(order);
+            redirectAttribute.addFlashAttribute("order", order);
+        } catch (Exception ex){
+            ex.printStackTrace();
+            redirectAttribute.addFlashAttribute("employee_not_found",String.format("Employee: %s not found!",employee.getId()));
+            return "redirect:/orders";
+        }
+        return "redirect:/orders/neworder";
+
+    }
+
+//    @GetMapping("/neworder")
+//    public String
+
+
 
 //    @PostMapping("/saveordertouser/{employeeId}")
 //    public String saveOrderToEmployee(@PathVariable int id, Model model){

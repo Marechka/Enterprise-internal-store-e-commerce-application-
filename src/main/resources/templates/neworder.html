@@ -12,7 +12,7 @@
 <header class="bg-dark py-5">
     <h1 class="text-white">Enter ID of Products available</h1>
 
-    <form th:action="@{'/Orders/saveordertouser'}" autocomplete="off" method="post">
+    <form th:action="@{'/orders/saveordertouser'}" autocomplete="off" method="post">
         <div class="input-group mb-3">
             <input list="employees" id="employeeId" name="employeeId" placeholder="Type Employee ID"
                    aria-label="Type Course Name" aria-describedby="button-addon1"/>
@@ -26,21 +26,21 @@
         </div>
     </form>
 
-    <form th:action="@{'/courses/'+${student.email}+'/savecoursestouser'}" autocomplete="off" method="post">
+<!--    <form th:action="@{'/courses/'+${student.email}+'/savecoursestouser'}" autocomplete="off" method="post">-->
 
-        <div class="input-group mb-3">
-            <input list="courses" id="courses-choice" name="courses-choice" placeholder="Type Course Name"
-                   aria-label="Type Course Name" aria-describedby="button-addon2"/>
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
-            <datalist id="courses">
-                            <span th:each="course: ${studentNotRegisteredToThisCourses}">
-                            <option th:value="${course.name}" th:text="${course.name}" th:id="${course.id}">
-                            </span>
-            </datalist>
+<!--        <div class="input-group mb-3">-->
+<!--            <input list="courses" id="courses-choice" name="courses-choice" placeholder="Type Course Name"-->
+<!--                   aria-label="Type Course Name" aria-describedby="button-addon2"/>-->
+<!--            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>-->
+<!--            <datalist id="courses">-->
+<!--                            <span th:each="course: ${studentNotRegisteredToThisCourses}">-->
+<!--                            <option th:value="${course.name}" th:text="${course.name}" th:id="${course.id}">-->
+<!--                            </span>-->
+<!--            </datalist>-->
 
 
-        </div>
-    </form>
+<!--        </div>-->
+<!--    </form>-->
 
     <table class="table table-dark">
         <thead>
