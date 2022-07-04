@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<!-- Head-->
+<div th:replace="fragrams/header :: header"/>
+<body>
+<!-- Responsive navbar-->
+<div th:replace="fragrams/nav :: nav"/>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-5 vh-100">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center my-5">
+                    <h1 class="display-4 fw-bolder text-white mb-2">Product Add & Edit</h1>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-5">
+                <!--                <p th:if="${employee.id ne 0}" class="text-warning">Employee added</p>-->
+                <form th:action="@{/products/saveupdateproduct}"  autocomplete="off" method="post">
+<!--                    <div class="input-group mb-3">-->
+<!--                        <input type="number" name="id" class="form-control" th:placeholder = "#{product.id}" th:field="*{product.id}" />-->
+<!--                    </div>-->
+                    <div class="input-group mb-3">
+                        <input type="text" name="firstName" class="form-control" placeholder="Product Name"  th:field="*{product.name}" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" name="lastName" class="form-control" placeholder="Product Description" th:field="*{product.description}" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" step="0.01" min="0" lang="en" name="startDate" class="form-control" placeholder="Product Price" th:field="*{product.price}">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <!--                        <input type="date" name="startDate" class="form-control" placeholder="Start Date"-->
+                        <!--                               aria-label="Student's Password" aria-describedby="button-addon2" th:field="*{employee.startDate}">-->
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
+                    </div>
+
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</header>

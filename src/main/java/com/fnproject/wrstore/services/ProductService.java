@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -47,7 +48,14 @@ public class ProductService {
     }
 
     public void delete(Product product){
-        productRepository.delete(product);
+            productRepository.delete(product);
+
+    }
+
+    public Product findProductByName(String name) {
+        Product product = productRepository.findProductByProductName(name);
+        log.info("Returned: " + product.toString());
+       return  product;
     }
 
 //    public List<ProductDto> listProducts() {
@@ -82,12 +90,12 @@ public class ProductService {
 //    }
 
 
-    public Product getProductById(Integer productId) throws NoSuchElementException{
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (!optionalProduct.isPresent())
-            throw new NoSuchElementException("Product id is invalid " + productId);
-        return optionalProduct.get();
-    }
+//    public Product getProductById(Integer productId) throws NoSuchElementException{
+//        Optional<Product> optionalProduct = productRepository.findById(productId);
+//        if (!optionalProduct.isPresent())
+//            throw new NoSuchElementException("Product id is invalid " + productId);
+//        return optionalProduct.get();
+//    }
 
 
 
