@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Slf4j
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@RequestMapping(value = "Orders")
+@RequestMapping(value = "orders")
 public class OrderController {
     EmployeeService employeeService;
     OrderService orderService;
@@ -36,12 +36,12 @@ public class OrderController {
         return "orders";
     }
 
-//    @GetMapping (value = "/neworder")
-//    public String newOrder(Model model) {
-//        model.addAttribute("neworderproducts", productService.listProducts());
-//        model.addAttribute("employees", employeeService.findAll());
-//        return "neworder";
-//    }
+    @GetMapping (value = "/neworder")
+    public String newOrder(Model model) {
+        model.addAttribute("neworderproducts", productService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
+        return "neworder";
+    }
 
 //    @PostMapping("/saveordertouser/{employeeId}")
 //    public String saveOrderToEmployee(@PathVariable int id, Model model){
