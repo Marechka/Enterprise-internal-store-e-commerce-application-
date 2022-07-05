@@ -55,13 +55,13 @@ public class ProductController {
     public String saveUpdateEmployee(RedirectAttributes model, @ModelAttribute("product") Product product){
         log.warn("Model product: "+ product);
         productService.saveOrUpdate(product);
-        model.addFlashAttribute("product",productService.findById(product.getId()));
+        model.addFlashAttribute("product",productService.findById(product.getProdId()));
         //model.addFlashAttribute("addedEmpId", employee.getId());
         return "redirect:/products";
     }
 
-    @GetMapping("/deleteproduct/{id}")
-    public RedirectView deleteEmployee(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/deleteproduct/{prodId}")
+    public RedirectView deleteEmployee(@PathVariable("prodId") int id, RedirectAttributes redirectAttributes) {
         try {
             Product product = productService.findById(id);
             productService.delete(product);

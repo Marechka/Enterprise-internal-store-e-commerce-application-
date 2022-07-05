@@ -1,6 +1,6 @@
 package com.fnproject.wrstore.services;
 
-import com.fnproject.wrstore.DTO.ProductDto;
+
 import com.fnproject.wrstore.data.ProductRepository;
 import com.fnproject.wrstore.models.Product;
 import lombok.AccessLevel;
@@ -44,7 +44,7 @@ public class ProductService {
 
     public void saveOrUpdate(Product product){
         productRepository.save(product);
-        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getId(),product.getName()));
+        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getProdId(),product.getName()));
     }
 
     public void delete(Product product){

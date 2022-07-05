@@ -49,7 +49,7 @@
                 <table class="table table-dark">
                 <tbody>
                 <tr th:each="product: ${products}">
-                     <form th:action="@{/orderdetails/addtoorder}" autocomplete="off" method="post">
+                     <form th:action="@{'/orderdetails/addtoorder/'+ ${order.id} + '/' + ${product.prodId}}" autocomplete="off" method="post">
                         <div class="input-group mb-3">
                             <input type="text"  class="form-control" name="productId" th:placeholder="${product.name}" th:field="*{orderdetails.product}"/>
                             <input type="number"  class="form-control" name="price" th:placeholder="${product.price}"/>

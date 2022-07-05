@@ -16,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-//@ToString
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "order_details")
 
@@ -44,7 +44,7 @@ public class OrderDetails {
     Order order;
 
     @OneToOne( orphanRemoval = true)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "prodId")
     Product product;
 
     public OrderDetails(int quantity, Order order, Product product) {

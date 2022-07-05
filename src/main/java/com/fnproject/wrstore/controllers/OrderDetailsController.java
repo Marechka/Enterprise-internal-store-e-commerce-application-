@@ -5,6 +5,7 @@ import com.fnproject.wrstore.models.OrderDetails;
 import com.fnproject.wrstore.models.Product;
 import com.fnproject.wrstore.services.OrderDetailsService;
 import com.fnproject.wrstore.services.OrderService;
+import com.fnproject.wrstore.services.ProductService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -26,24 +27,36 @@ public class OrderDetailsController {
 
     OrderDetailsService orderDetailsService;
     OrderService orderService;
+    ProductService productService;
 
     @Autowired
-    public OrderDetailsController(OrderDetailsService orderDetailsService, OrderService orderService) {
+    public OrderDetailsController(OrderDetailsService orderDetailsService, OrderService orderService, ProductService productService) {
         this.orderDetailsService = orderDetailsService;
         this.orderService = orderService;
+        this.productService = productService;
     }
 
-//    @PostMapping("/addtoorder")
-//    public String registerStudentToCourse(@ModelAttribute("orderdetails") OrderDetails orderDetails, @ModelAttribute("order") Order order, Model model){
-//        orderDetailsService.saveOrUpdate(orderDetails);
-//        OrderDetails ordD = orderDetailsService.saveOrUpdate(orderDetails);
-//        Order ord = order;
-//        orderDetails.setOrder(ord);
-//        log.warn("Setting up order in OD: " + order);
-//       orderDetailsService.saveOrUpdate(orderDetails);
-//       log.warn("Submitting order: "+ orderDetails.getOrder());
-//       orderService.placeOrder(orderDetails.getOrder());
-//       return "redirect:/orders";
+    @PostMapping("/addtoorder/{id}/{prodId}")
+    public String registerStudentToCourse(@ModelAttribute("orderdetails") OrderDetails orderDetails, @PathVariable("id") int id, @PathVariable("prodId") int prodId, Model model){
+        //orderService.findById(orderId);
+        //OrderDetails ordD = orderDetailsService.saveOrUpdate(orderDetails);
+
+        orderDetails.setProduct(productService.findById(prodId));
+        orderDetails.setOrder(orderService.findById(id));
+        orderDetailsService.saveOrUpdate(orderDetails);
+
+        log.warn("Setting up Order in OD: " + orderService.findById(id).toString());
+        log.warn("Setting up Product in OD: " + productService.findById(prodId));
+        log.warn("Setting up order details for order: " + orderDetails.toString());
+
+        orderDetailsService.saveOrUpdate(orderDetails);
+
+        log.warn("Submitting order: "+ orderDetails.getOrder());
+        log.warn("Product in order details: " + orderDetails.getProduct());
+        log.warn("Order details product QUANTITY: " + orderDetails.getQty());
+
+        orderService.placeOrder(orderDetails.getOrder());
+        return "redirect:/orders";
 
 //        model.addAttribute("student",studentService.findByEmail(email));
 //        // courses available to register

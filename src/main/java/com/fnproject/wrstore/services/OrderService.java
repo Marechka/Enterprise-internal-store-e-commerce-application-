@@ -114,7 +114,7 @@ public class OrderService {
         List<OrderDetails> orderDetails = orderDetailsRepository.findOrderDetailsByOrderId(orderId);
         double total = 0;
         for (OrderDetails  details: orderDetails) {
-            Product product = productRepository.findById(details.getProduct().getId()).orElseThrow();
+            Product product = productRepository.findById(details.getProduct().getProdId()).orElseThrow();
             total+= details.getQty() * product.getPrice();
         }
         order.setTotalPrice(total);
