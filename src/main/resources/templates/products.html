@@ -47,7 +47,7 @@
                         <th scope="row" th:text="${foundproduct.prodId}"></th>
                         <td th:text="${foundproduct.name}"></td>
                         <td th:text="${foundproduct.description}"></td>
-                        <td th:text="${foundproduct.price}"></td>
+                        <td th:text="'$' + ${foundproduct.price}"></td>
                             <td ><a th:href="@{products/productform}" class="btn btn-outline-secondary">Edit Product</a></td>
                             <td ><a th:href="@{'products/deleteproduct/' + ${foundproduct.prodId}}" class="btn btn-outline-secondary">Delete Product</a></td>
                         </tr>
@@ -75,7 +75,7 @@
                         <th scope="row" th:text="${product.prodId}"></th>
                         <td th:text="${product.name}" ></td>
                         <td th:text="${product.description}"></td>
-                        <td th:text="${product.price}"></td>
+                        <td th:text="'$' + ${product.price}"></td>
                     </tr>
                     </tbody>
                 </table>

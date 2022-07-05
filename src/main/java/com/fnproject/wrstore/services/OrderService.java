@@ -120,32 +120,6 @@ public class OrderService {
         order.setTotalPrice(total);
         orderRepository.save(order);
     }
-//        CartDto cartDto = cartService.listCartItems(employee);
-//
-//        List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
-//
-//        // create the order and save it
-//        Order newOrder = new Order(employee);
-//        //newOrder.setDate(new Date());
-//        //newOrder.setSessionId(sessionId);
-//        newOrder.setEmployee(employee);
-//        newOrder.setTotalPrice(cartDto.getTotalCost());
-//        orderRepository.save(newOrder);
-//
-//        for (CartItemDto cartItemDto : cartItemDtoList) {
-//            // create orderItem and save each one
-//            OrderDetails orderItem = new OrderDetails();
-//            orderItem.setDate(new Date());
-//            orderItem.setPrice(cartItemDto.getProduct().getPrice());
-//            orderItem.setProduct(cartItemDto.getProduct());
-//            orderItem.setQuantity(cartItemDto.getQuantity());
-//            orderItem.setOrder(newOrder);
-//            // add to order item list
-//            orderItemsRepository.save(orderItem);
-//        }
-//        //
-//        cartService.deleteEmployeeCartItems(employee);
-//    }
 
     public List<Order> listOrders(Employee employee) {
         return orderRepository.findAllByEmployeeOrderByDateDesc(employee);

@@ -29,7 +29,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-
     public List<Product> findAll(){
         return productRepository.findAll();
     }
@@ -49,7 +48,6 @@ public class ProductService {
 
     public void delete(Product product){
             productRepository.delete(product);
-
     }
 
     public Product findProductByName(String name) {
