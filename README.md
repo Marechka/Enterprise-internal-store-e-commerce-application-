@@ -15,4 +15,4 @@ This project is a prototype for the small store with a very limited variety of i
 There are 4 models: Employee, Product, Order and OrdeerDetails. Order contains a reference to the employee and total expense on the certain order, while OrderDetails contain more detailed information about the order, as particular products purchased and quantities for each item.
   
 
-![Project MariaDB SQL Schema](Schema.JPG)
+![Project MariaDB SQL Schema](Schema1.JPG)
