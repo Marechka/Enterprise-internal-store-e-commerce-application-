@@ -14,9 +14,47 @@
             <div class="col-lg-8">
                 <div class="text-center my-5">
                     <h1 class="display-4 fw-bolder text-white mb-2">Products</h1>
+                    <a th:href="@{products/productform}" class="btn btn-primary btn-sm px-4 me-sm-3">Add New</a>
                 </div>
             </div>
         </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-10">
+                <form th:action="@{products/findproductbyname}" autocomplete="off" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Product Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Find</button>
+                    </div>
+                </form>
+                <div th:if="${product_not_found}">
+                    <p class="text-warning" th:text="${product_not_found}"></p>
+                </div>
+                <div th:if="${product_is_used_in_order}">
+                    <p class="text-warning" th:text="${product_is_used_in_order}"></p>
+                </div>
+                <div th:if="${foundproduct}">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product #</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Price</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <th scope="row" th:text="${foundproduct.prodId}"></th>
+                        <td th:text="${foundproduct.name}"></td>
+                        <td th:text="${foundproduct.description}"></td>
+                        <td th:text="'$' + ${foundproduct.price}"></td>
+                            <td ><a th:href="@{products/productform}" class="btn btn-outline-secondary">Edit Product</a></td>
+                            <td ><a th:href="@{'products/deleteproduct/' + ${foundproduct.prodId}}" class="btn btn-outline-secondary">Delete Product</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-10">
                 <h1 class="text-white">Product List</h1>
@@ -34,17 +72,17 @@
                     </thead>
                     <tbody>
                     <tr th:each="product: ${products}">
-                        <th scope="row" th:text="${product.id}"></th>
+                        <th scope="row" th:text="${product.prodId}"></th>
                         <td th:text="${product.name}" ></td>
                         <td th:text="${product.description}"></td>
-                        <td th:text="${product.price}"></td>
+                        <td th:text="'$' + ${product.price}"></td>
                     </tr>
-
                     </tbody>
                 </table>
             </div>
 
         </div>
+    </div>
     </div>
 </header>
 

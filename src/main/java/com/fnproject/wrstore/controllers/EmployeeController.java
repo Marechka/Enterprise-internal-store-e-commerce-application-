@@ -39,16 +39,16 @@ OrderService orderService;
     }
 
     @PostMapping("/findemployeebyid")
-    public RedirectView findEmployeeById(@RequestParam(required = false) int id, RedirectAttributes redirectAttributes){
+    public String findEmployeeById(@RequestParam(required = false) int id, RedirectAttributes redirectAttributes){
         log.warn("employee id: " + id);
         try {
             redirectAttributes.addFlashAttribute("employee", employeeService.findByEmployeeId(id));
         } catch (RuntimeException ex){
             ex.printStackTrace();
             redirectAttributes.addFlashAttribute("employee_not_found",String.format("Employee: %s not found!",id));
-            return new RedirectView("/employees");
+            return "redirect:/employees";
         }
-        return new RedirectView("/employees");
+        return "redirect:/employees";
     }
 
     @GetMapping(value="/employeeform")
@@ -57,10 +57,10 @@ OrderService orderService;
         return "editcreateemployee";
     }
     @PostMapping("/saveupdateemployee")
-    public String saveUpdateEmployee(RedirectAttributes model, @ModelAttribute("employee") Employee employee){
+    public String saveUpdateEmployee(RedirectAttributes redirectAttribute, @ModelAttribute("employee") Employee employee){
         log.warn("Model employee: "+ employee);
         employeeService.saveOrUpdate(employee);
-        model.addFlashAttribute("employee",employeeService.findByEmployeeId(employee.getId()));
+        redirectAttribute.addFlashAttribute("employee",employeeService.findByEmployeeId(employee.getId()));
         //model.addFlashAttribute("addedEmpId", employee.getId());
         return "redirect:/employees";
     }

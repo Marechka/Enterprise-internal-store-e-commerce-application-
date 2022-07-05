@@ -46,7 +46,7 @@
                         <tr>
                             <th scope="row" th:text="${employee.id}"></th>
                             <td th:text="${employee.firstName} + ' ' + ${employee.lastName}"></td>
-                            <td th:text="${employee.startDate}"></td>
+                            <td th:text="${#dates.format(employee.startDate, 'dd/MM/yyyy')}"></td>
                             <td th:text="${employee.termDate}"></td>
                             <td ><a th:href="@{'/orders/neworder/' + ${employee.id}}" class="btn btn-outline-secondary">New Order</a></td>
                             <td ><a th:href="@{employees/employeeform}" class="btn btn-outline-secondary">Edit Employee</a></td>
@@ -130,7 +130,7 @@
                     <tr th:each="employee: ${employees}">
                         <th scope="row" th:text="${employee.id}"></th>
                         <td th:text="${employee.firstName} + ' ' + ${employee.lastName}" ></td>
-                        <td th:text="${employee.startDate}"></td>
+                        <td th:text="${#dates.format(employee.startDate, 'dd/MM/yyyy')}"></td>
 <!--                        <td>-->
 <!--                            <p class="d-inline" th:each="order: ${employee.orders}">-->
 <!--                                <span class="mx-1" th:text="${order.id}"></span>-->

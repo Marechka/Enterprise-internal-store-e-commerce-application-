@@ -16,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-//@ToString
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name="orders")
 
@@ -26,7 +26,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-
     @Column(name = "date") Date date;
 
     @Column(name = "total_price")

@@ -7,65 +7,113 @@
 <body>
 <!-- Responsive navbar-->
 <div th:replace="fragrams/nav :: nav" />
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-5 vh-100">
+            <div class="row gx-5 justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center my-5">
+<!--                        <h1 class="text-white" th:text = "'New Order ' +' for employee ' + ${employee.firstName} +' ' +${employee.lastName}"></h1>-->
+                        <h1 class="text-white" th:text = "'New Order ' + '#'+ ${order.id} +' for employee ' + ${employee.firstName} +' ' +${employee.lastName}"></h1>
+                    </div>
+                </div>
+            </div>
 
-<!-- Header-->
-<header class="bg-dark py-5">
-    <h1 class="text-white">Enter ID of Products available</h1>
 
-    <form th:action="@{'/Orders/saveordertouser'}" autocomplete="off" method="post">
-        <div class="input-group mb-3">
-            <input list="employees" id="employeeId" name="employeeId" placeholder="Type Employee ID"
-                   aria-label="Type Course Name" aria-describedby="button-addon1"/>
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Submit</button>
-            <datalist id="employees">
-                            <span th:each="employee: ${employees}">
-                            <option th:value="${employee.employeeId}" th:text="${employee.firstName}" th:id="${employee.LastName}">
-                            </span>
-            </datalist>
+<!--    <form th:action="@{'/orders/fillorder'}" autocomplete="off" method="post">-->
+<!--        <div class="input-group mb-3">-->
+<!--            <input list="employees" id="employeeId" name="employeeId" placeholder="Type Employee ID"-->
+<!--                   aria-label="Type Course Name" aria-describedby="button-addon1"/>-->
+<!--            <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Submit</button>-->
+<!--            <datalist id="employees">-->
+<!--                            <span th:each="employee: ${employees}">-->
+<!--                            <option th:value="${employee.employeeId}" th:text="${employee.firstName}" th:id="${employee.LastName}">-->
+<!--                            </span>-->
+<!--            </datalist>-->
 
+<!--        </div>-->
+<!--        -->
+<!--    </form>-->
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-5">
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Qty</th>
+                </tr>
+                </thead>
+            </table>
+
+                <table class="table table-dark">
+                <tbody>
+                <tr th:each="product: ${products}">
+                     <form th:action="@{'/orderdetails/addtoorder/'+ ${order.id} + '/' + ${product.prodId}}" autocomplete="off" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text"  class="form-control" name="productId" th:placeholder="${product.name}" th:field="*{orderdetails.product}"/>
+                            <input type="number"  class="form-control" name="price" th:placeholder="${product.price}"/>
+                            <input type="number"  class="form-control" name="qty" aria-describedby="button-addon1" th:field="*{orderdetails.qty}"/>
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Add</button>
+                        </div>
+                    </form>
+                </tr>
+                </tbody>
+
+<!--                <tbody>-->
+<!--                <tr th:each="order: ${orders}">-->
+<!--                    <th scope="row" th:text="${order.id}"></th>-->
+<!--                    <td th:text="${order.employee.getFirstName()} + ' ' + ${order.employee.getLastName()} " ></td>-->
+<!--                    <td th:text="${order.date}"></td>-->
+<!--                    <td th:text="${order.totalPrice}"></td>-->
+<!--                </tr>-->
+
+<!--                </tbody>-->
+            </table>
+            </div>
         </div>
-    </form>
 
-    <form th:action="@{'/courses/'+${student.email}+'/savecoursestouser'}" autocomplete="off" method="post">
+<!--    <form th:action="@{'/courses/'+${student.email}+'/savecoursestouser'}" autocomplete="off" method="post">-->
 
-        <div class="input-group mb-3">
-            <input list="courses" id="courses-choice" name="courses-choice" placeholder="Type Course Name"
-                   aria-label="Type Course Name" aria-describedby="button-addon2"/>
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
-            <datalist id="courses">
-                            <span th:each="course: ${studentNotRegisteredToThisCourses}">
-                            <option th:value="${course.name}" th:text="${course.name}" th:id="${course.id}">
-                            </span>
-            </datalist>
+<!--        <div class="input-group mb-3">-->
+<!--            <input list="courses" id="courses-choice" name="courses-choice" placeholder="Type Course Name"-->
+<!--                   aria-label="Type Course Name" aria-describedby="button-addon2"/>-->
+<!--            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>-->
+<!--            <datalist id="courses">-->
+<!--                            <span th:each="course: ${studentNotRegisteredToThisCourses}">-->
+<!--                            <option th:value="${course.name}" th:text="${course.name}" th:id="${course.id}">-->
+<!--                            </span>-->
+<!--            </datalist>-->
 
 
+<!--        </div>-->
+<!--    </form>-->
+
+<!--    <table class="table table-dark">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th scope="col">Name</th>-->
+<!--            <th scope="col">Description</th>-->
+<!--            <th scope="col">price</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <form th:action="@{'/cart/add'}" autocomplete="off" method="post">-->
+<!--        <tbody>-->
+<!--        <tr th:each="product: ${neworderproducts}">-->
+<!--            <th scope="row" th:text="${productDto.id}" ></th>-->
+<!--            <th scope="row" th:text="${productDto.name}" ></th>-->
+<!--&lt;!&ndash;            <td> <input aria-describedby="button-addon2" type="number" name = "AddToCartDto" th:field="*{AddToCartDto.id}" ></td>&ndash;&gt;-->
+<!--            <td th:text="${productDto.description}" ></td>-->
+<!--            <td th:text="${productDto.price}" ></td>-->
+<!--&lt;!&ndash;            <td><input type="number" name="Qty" class="form-control" placeholder="Qty" aria-describedby="button-addon2" ></td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button></td>&ndash;&gt;-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--&lt;!&ndash;            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>&ndash;&gt;-->
+<!--        </form>-->
+<!--    </table>-->
+<!--    </div>-->
         </div>
-    </form>
-
-    <table class="table table-dark">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">price</th>
-        </tr>
-        </thead>
-        <form th:action="@{'/cart/add'}" autocomplete="off" method="post">
-        <tbody>
-        <tr th:each="productDto: ${neworderproducts}">
-            <th scope="row" th:text="${productDto.id}" ></th>
-            <th scope="row" th:text="${productDto.name}" ></th>
-<!--            <td> <input aria-describedby="button-addon2" type="number" name = "AddToCartDto" th:field="*{AddToCartDto.id}" ></td>-->
-            <td th:text="${productDto.description}" ></td>
-            <td th:text="${productDto.price}" ></td>
-<!--            <td><input type="number" name="Qty" class="form-control" placeholder="Qty" aria-describedby="button-addon2" ></td>-->
-<!--            <td><button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button></td>-->
-        </tr>
-        </tbody>
-<!--            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>-->
-        </form>
-    </table>
-    </div>
 </header>
 
 

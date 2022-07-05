@@ -1,6 +1,6 @@
 package com.fnproject.wrstore.services;
 
-import com.fnproject.wrstore.DTO.ProductDto;
+
 import com.fnproject.wrstore.data.ProductRepository;
 import com.fnproject.wrstore.models.Product;
 import lombok.AccessLevel;
@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -28,7 +29,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-
     public List<Product> findAll(){
         return productRepository.findAll();
     }
@@ -43,11 +43,17 @@ public class ProductService {
 
     public void saveOrUpdate(Product product){
         productRepository.save(product);
-        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getId(),product.getName()));
+        log.info(String.format("Product ID created: %d Order Employee Name: %s",product.getProdId(),product.getName()));
     }
 
     public void delete(Product product){
-        productRepository.delete(product);
+            productRepository.delete(product);
+    }
+
+    public Product findProductByName(String name) {
+        Product product = productRepository.findProductByProductName(name);
+        log.info("Returned: " + product.toString());
+       return  product;
     }
 
 //    public List<ProductDto> listProducts() {
@@ -82,12 +88,12 @@ public class ProductService {
 //    }
 
 
-    public Product getProductById(Integer productId) throws NoSuchElementException{
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (!optionalProduct.isPresent())
-            throw new NoSuchElementException("Product id is invalid " + productId);
-        return optionalProduct.get();
-    }
+//    public Product getProductById(Integer productId) throws NoSuchElementException{
+//        Optional<Product> optionalProduct = productRepository.findById(productId);
+//        if (!optionalProduct.isPresent())
+//            throw new NoSuchElementException("Product id is invalid " + productId);
+//        return optionalProduct.get();
+//    }
 
 
 

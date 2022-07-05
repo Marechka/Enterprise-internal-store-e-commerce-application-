@@ -1,6 +1,6 @@
 package com.fnproject.wrstore.models;
 
-import com.fnproject.wrstore.DTO.ProductDto;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    int prodId;
 
     @NotNull
     String name;
