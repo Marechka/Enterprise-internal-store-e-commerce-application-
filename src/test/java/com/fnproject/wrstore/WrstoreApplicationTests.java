@@ -12,35 +12,20 @@ import com.fnproject.wrstore.services.EmployeeService;
 import com.fnproject.wrstore.services.OrderDetailsService;
 import com.fnproject.wrstore.services.OrderService;
 import com.fnproject.wrstore.services.ProductService;
-
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.ContextConfiguration;
-
-import javax.activation.DataSource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @SpringBootTest
-//@RunWith(SpringRunner.class)
-//@ContextConfiguration(classes=WrstoreApplicationTests.class)
-//com.fnproject.wrstore.
-//@DataJpaTest
 @Slf4j
 class WrstoreApplicationTests {
 
