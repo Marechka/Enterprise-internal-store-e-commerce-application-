@@ -27,10 +27,8 @@ public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-
     @NotNull
     int qty;
-
     @ToString.Exclude
     @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id")

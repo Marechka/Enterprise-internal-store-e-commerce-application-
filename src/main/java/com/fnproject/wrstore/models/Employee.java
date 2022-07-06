@@ -18,13 +18,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-//@ToString
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "employees")
-
 @Entity
 public class Employee {
-
     @Id
     @NonNull
     //@GeneratedValue(strategy = GenerationType.IDENTITY)

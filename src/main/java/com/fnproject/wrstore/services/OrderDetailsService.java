@@ -30,26 +30,21 @@ public class OrderDetailsService {
         this.orderDetailsRepository = orderDetailsRepository;
         this.orderRepository = orderRepository;
     }
-//    public List<OrderDetails> findAll() {
-//        return orderDetailsRepository.findAll();
-//    }
-
-    // Make it search by Order number
 
     @Transactional(rollbackOn = {NoSuchElementException.class})
     public List<OrderDetails> findByOrderId(int id) throws NoSuchElementException{
         return orderDetailsRepository.findOrderDetailsByOrderId(id);
     }
 
-    // saveOrUpdate()
-    public void addOrderedProduct(int orderId, OrderDetails orderDetails){
-        log.info(orderDetails.toString());
-        orderDetailsRepository.save(orderDetails);
-        Order order = orderRepository.findById(orderId).orElseThrow();
-      //  order.addOrderDetails(orderDetails);
-       // orderRepository.getOrder().add(order);
-
-    }
+//    // saveOrUpdate()
+//    public void addOrderedProduct(int orderId, OrderDetails orderDetails){
+//        log.info(orderDetails.toString());
+//        orderDetailsRepository.save(orderDetails);
+//        Order order = orderRepository.findById(orderId).orElseThrow();
+//      //  order.addOrderDetails(orderDetails);
+//       // orderRepository.getOrder().add(order);
+//
+//    }
 
     public void saveOrUpdate(OrderDetails orderDetails) {
         orderDetailsRepository.save(orderDetails);

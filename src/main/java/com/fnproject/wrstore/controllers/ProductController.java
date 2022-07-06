@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping(value="/productform")
-    public String studentForm(Model model){
+    public String productForm(Model model){
         model.addAttribute("product",new Product());
         return "editcreateproduct";
     }

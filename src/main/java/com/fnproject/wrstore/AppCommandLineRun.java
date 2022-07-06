@@ -40,13 +40,11 @@ public class AppCommandLineRun implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-         Employee emp1 = new Employee(1, "Masha", "Volska", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") );
-       // Employee emp1 = new Employee(1, "Masha", "Volska", new Date);
+        Employee emp1 = new Employee(1, "Masha", "Volska", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") );
         log.info("Before save" + emp1);
         employeeService.saveOrUpdate(emp1);
         log.info("After save" + emp1);
         employeeService.saveOrUpdate(new Employee( 2, "Tania", "Yanushkevych", new SimpleDateFormat("MM/dd/yyyy").parse("01/15/2022") ));
-
 
 
         Product pr1 = new Product("Juice 5 oz", "Ocean Spray", 2.50);
@@ -56,25 +54,19 @@ public class AppCommandLineRun implements CommandLineRunner {
 
 
         Order or1 = new Order(emp1);
-       orderService.save(or1);
-       //orderService.save(new Order(employeeService.findByEmployeeId(1)));
+        orderService.save(or1);
+        orderDetailsService.saveOrUpdate(new OrderDetails(5,orderService.findById(1), pr1));
 
-        //OrderDetails ord1 = new OrderDetails(5, or1,pr1 );
-        //orderDetailsService.saveOrUpdate(ord1);
-
-       orderDetailsService.saveOrUpdate(new OrderDetails(5,orderService.findById(1), pr1));
         Order or2 = new Order(emp1);
         log.warn("Or2: " + or2);
-         orderService.save(or2);
+        orderService.save(or2);
+        orderDetailsService.saveOrUpdate(new OrderDetails(2,orderService.findById(2), pr2));
 
         orderService.placeOrder(or1);
+        orderService.placeOrder(or2);
+
         orderService.placeOrder(orderService.findById(1));
 
 
-
-//         Order or1 = new Order(java.time.LocalDate.now()));
-//        orderService.saveOrUpdate(or1, emp1.getEmployeeId());
-//
-//        orderDetailsService.saveOrUpdate( new OrderDetails(new OrderDetailsID(or1, pr1), 2, 5));
     }
 }
