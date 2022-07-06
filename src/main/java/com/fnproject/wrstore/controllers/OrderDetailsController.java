@@ -36,43 +36,4 @@ public class OrderDetailsController {
         this.productService = productService;
     }
 
-//    @PostMapping("/addtoorder/{id}/{prodId}")
-//    public String registerStudentToCourse(@ModelAttribute("orderdetails") OrderDetails orderDetails, @PathVariable("id") int id, @PathVariable("prodId") int prodId, Model model){
-//        //orderService.findById(orderId);
-//        //OrderDetails ordD = orderDetailsService.saveOrUpdate(orderDetails);
-//
-//        orderDetails.setProduct(productService.findById(prodId));
-//        orderDetails.setOrder(orderService.findById(id));
-//        orderDetailsService.saveOrUpdate(orderDetails);
-//
-//        log.warn("Setting up Order in OD: " + orderService.findById(id).toString());
-//        log.warn("Setting up Product in OD: " + productService.findById(prodId));
-//        log.warn("Setting up order details for order: " + orderDetails.toString());
-//
-//        orderDetailsService.saveOrUpdate(orderDetails);
-//
-//        log.warn("Submitting order: "+ orderDetails.getOrder());
-//        log.warn("Product in order details: " + orderDetails.getProduct());
-//        log.warn("Order details product QUANTITY: " + orderDetails.getQty());
-//        model.addAttribute("addedorderdetails", orderDetails);
-//        //model.addAttribute("order", orderService.findById(id));
-//        //orderService.placeOrder(orderDetails.getOrder());
-//        return "orders/generateneworder";
-
-//        model.addAttribute("student",studentService.findByEmail(email));
-//        // courses available to register
-//        Set<Course> studentNotRegisteredToThisCourses = new HashSet<>(courseService.findAll());
-//        studentNotRegisteredToThisCourses.removeAll(courseService.getStudentCourses(email));
-//        log.info(studentNotRegisteredToThisCourses.toString());
-//        model.addAttribute("studentNotRegisteredToThisCourses",studentNotRegisteredToThisCourses);
-//    }
-//
-//    @PostMapping("/saveupdateemployee")
-//    public String saveUpdateEmployee(RedirectAttributes redirectAttribute, @ModelAttribute("employee") Employee employee){
-//        log.warn("Model employee: "+ employee);
-//        employeeService.saveOrUpdate(employee);
-//        redirectAttribute.addFlashAttribute("employee",employeeService.findByEmployeeId(employee.getId()));
-//        //model.addFlashAttribute("addedEmpId", employee.getId());
-//        return "redirect:/employees";
-//    }
 }

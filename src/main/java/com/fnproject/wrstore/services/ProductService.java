@@ -56,47 +56,4 @@ public class ProductService {
        return  product;
     }
 
-//    public List<ProductDto> listProducts() {
-//        List<Product> products = productRepository.findAll();
-//        List<ProductDto> productDtos = new ArrayList<>();
-//        for(Product product : products) {
-//            ProductDto productDto = getDtoFromProduct(product);
-//            productDtos.add(productDto);
-//        }
-//        return productDtos;
-//    }
-
-//    public static ProductDto getDtoFromProduct(Product product) {
-//        ProductDto productDto = new ProductDto(product);
-//        return productDto;
-//    }
-//
-//    public static Product getProductFromDto(ProductDto productDto) {
-//        Product product = new Product(productDto);
-//        return product;
-//    }
-
-//    public void addProduct(ProductDto productDto) {
-//        Product product = getProductFromDto(productDto);
-//        productRepository.save(product);
-//    }
-//
-//    public void updateProduct(int productID, ProductDto productDto) {
-//        Product product = getProductFromDto(productDto);
-//        product.setId(productID);
-//        productRepository.save(product);
-//    }
-
-
-//    public Product getProductById(Integer productId) throws NoSuchElementException{
-//        Optional<Product> optionalProduct = productRepository.findById(productId);
-//        if (!optionalProduct.isPresent())
-//            throw new NoSuchElementException("Product id is invalid " + productId);
-//        return optionalProduct.get();
-//    }
-
-
-
-
-
 }

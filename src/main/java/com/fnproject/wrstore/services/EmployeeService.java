@@ -39,13 +39,13 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
-    @Transactional(rollbackOn = {NoSuchElementException.class})
-    public void addOrder(int employeeId, Order order) {
-        Employee employee = employeeRepository.findById(employeeId);;
-        //order = orderRepository.save(order);
-        employee.getOrders().add(order);
-
-    }
+//    @Transactional(rollbackOn = {NoSuchElementException.class})
+//    public void addOrder(int employeeId, Order order) {
+//        Employee employee = employeeRepository.findById(employeeId);;
+//        //order = orderRepository.save(order);
+//        employee.getOrders().add(order);
+//
+//    }
 
     public void saveOrUpdate(Employee employee){
         log.info(employee.toString());

@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "index")
 public class HomeController {
 
-    @GetMapping//(value = {"/", "index"})
+    @GetMapping
     public String homePage(){
         return "index";
     }
-    @GetMapping(value = "/neworder")
-    public String newOrder(){
-        return "neworder";
-    }
+
 }

@@ -16,10 +16,8 @@
             </div>
         </div>
 
-
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-5">
-<!--                <p th:if="${employee.id ne 0}" class="text-warning">Employee added</p>-->
                 <form th:action="@{/employees/saveupdateemployee}"  autocomplete="off" method="post">
                     <div class="input-group mb-3">
                         <input type="number" name="id" class="form-control" th:placeholder = "#{employee.id}" th:field="*{employee.id}" />
@@ -36,20 +34,11 @@
                     <div class="input-group mb-3">
                         <input type="date" name="termDate" class="form-control" placeholder="Termination Date" th:field="*{employee.termDate}">
                     </div>
-
                     <div class="input-group mb-3">
-<!--                        <input type="date" name="startDate" class="form-control" placeholder="Start Date"-->
-<!--                               aria-label="Student's Password" aria-describedby="button-addon2" th:field="*{employee.startDate}">-->
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Submit</button>
                     </div>
-
-
                 </form>
-
             </div>
         </div>
-
     </div>
-
-
 </header>

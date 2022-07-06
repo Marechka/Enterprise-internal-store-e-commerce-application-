@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Slf4j
-//@ToString
+@ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "product")
 

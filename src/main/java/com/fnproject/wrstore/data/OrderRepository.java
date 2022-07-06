@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllByEmployeeOrderByDateDesc(Employee employee);
-
     Order findOrderById(int id);
 
 }

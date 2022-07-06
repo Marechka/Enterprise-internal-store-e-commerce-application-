@@ -27,12 +27,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(name = "date") Date date;
-
     @Column(name = "total_price")
     double totalPrice;
 
-//    @Column(name = "session_id")
-//    private String sessionId;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", orphanRemoval = true)
     private List<OrderDetails> orderItems = new java.util.ArrayList<>();
@@ -47,11 +44,6 @@ public class Order {
         this.date = new Date();
         this.employee = employee;
     }
-//    public Order(int id, Employee employee) {
-//        this.id = id;
-//        this.date = new Date();
-//        this.employee = employee;
-//    }
 
     @Override
     public boolean equals(Object o) {
