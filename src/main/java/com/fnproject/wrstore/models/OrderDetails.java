@@ -31,19 +31,12 @@ public class OrderDetails {
     @NotNull
     int qty;
 
-//    @NotNull
-//    @Column(name = "price")
-//    double price;
-
-//    @Column(name = "date")
-//    Date date;
-
     @ToString.Exclude
     @ManyToOne()
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     Order order;
 
-    @OneToOne( orphanRemoval = true)
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "product_id", referencedColumnName = "prodId")
     Product product;
 

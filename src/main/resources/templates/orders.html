@@ -46,7 +46,7 @@
                         <th scope="row" th:text="${order.id}"></th>
                         <td th:text="${order.employee.getFirstName()} + ' ' + ${order.employee.getLastName()} " ></td>
                         <td th:text="${#dates.format(order.date, 'dd/MM/yyyy')}"></td>
-                        <td th:text="${order.totalPrice}"></td>
+                        <td th:text="'$' + ${order.totalPrice}"></td>
                     </tr>
 
                     </tbody>
